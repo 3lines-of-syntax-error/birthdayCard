@@ -178,10 +178,10 @@
         <span id="musicText">Play Song</span>
       </button>
 
-      <!-- View / Mode Switcher buttons -->
-      <div class="flex items-center space-x-2 bg-slate-900/80 p-1 rounded-full border border-slate-700/60 backdrop-blur shadow-lg">
+      <!-- View / Mode Switcher buttons (Hidden for recipients viewing a shared card) -->
+      <div id="creatorControlsNav" class="flex items-center space-x-2 bg-slate-900/80 p-1 rounded-full border border-slate-700/60 backdrop-blur shadow-lg">
         <button id="viewCelebrationBtn" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition bg-gradient-to-r from-amber-500 to-pink-500 text-slate-950 shadow-md">
-          <i class="fa-solid fa-gift mr-1.5"></i>Celebration
+          <i class="fa-solid fa-gift mr-1.5"></i>Preview
         </button>
         <button id="viewCustomizeBtn" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition">
           <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Customize
@@ -249,9 +249,11 @@
             <!-- Candle & Flame -->
             <div class="relative flex flex-col items-center z-20 mb-[-4px]">
               <!-- Blowable Flame -->
-              <div id="candleFlameWrapper" class="relative cursor-pointer group flex flex-col items-center">
+              <div id="candleFlameWrapper" class="relative cursor-pointer group flex flex-col items-center p-2 -m-2">
                 <div id="candleFlame" class="candle-flame transition-all duration-300"></div>
-                <div id="flameTip" class="w-1.5 h-1.5 bg-yellow-100 rounded-full blur-[1px] absolute top-1"></div>
+                <div id="flameTip" class="w-1.5 h-1.5 bg-yellow-100 rounded-full blur-[1px] absolute top-3"></div>
+                <!-- Little black wick underneath flame -->
+                <div class="w-0.5 h-2 bg-slate-900 rounded-full mt-0.5"></div>
               </div>
               
               <!-- Candle stick -->
@@ -289,9 +291,6 @@
             <p id="wishRevealMsg" class="hidden text-lg font-serif-title text-amber-300 animate-fade-in font-medium">
               ✨ "May your deepest dreams and highest ambitions come alive this year!" ✨
             </p>
-            <button id="reLightBtn" class="hidden mt-3 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3.5 py-1.5 rounded-full border border-slate-700 transition">
-              <i class="fa-solid fa-fire mr-1 text-amber-400"></i> Relight candle
-            </button>
           </div>
         </div>
       </section>
@@ -362,12 +361,12 @@
         </div>
       </section>
 
-      <!-- SHARE / SEND WISH FOOTER CTA -->
-      <section class="text-center pt-4 pb-8">
-        <p class="text-xs text-slate-400 mb-3">Want to send a personalized birthday wish like this to your loved one?</p>
+      <!-- SHARE / SEND WISH FOOTER CTA (Hidden for recipients viewing a shared card) -->
+      <section id="creatorFooterCTA" class="text-center pt-4 pb-8">
+        <p class="text-xs text-slate-400 mb-3">Want to edit or personalize this celebration card?</p>
         <button id="ctaCreateYoursBtn" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-slate-950 font-bold px-6 py-2.5 rounded-full shadow-lg transition active:scale-95 text-sm inline-flex items-center space-x-2">
           <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <span>Customize Your Own Gift Now</span>
+          <span>Open Card Studio</span>
         </button>
       </section>
 
@@ -524,6 +523,7 @@
 
     let appData = { ...defaultData };
     let candleBlown = false;
+    let isRecipientMode = false;
 
     /* ========================================================
        WEB AUDIO SYNTHESIZER: HAPPY BIRTHDAY ALWAYS-PLAYING LOOP
@@ -834,21 +834,30 @@
       const tip = document.getElementById('flameTip');
       const wrapper = document.getElementById('candleFlameWrapper');
 
-      // Extinguish Flame
-      flame.style.transform = 'scale(0)';
+      // Instantly extinguish and remove the fire
+      flame.style.transition = 'all 0.35s ease-out';
+      flame.style.transform = 'scale(0) translateY(-10px)';
       flame.style.opacity = '0';
       if (tip) tip.style.display = 'none';
 
-      // Create smoke puffs
-      for (let i = 0; i < 6; i++) {
+      // Ensure cursor switches from pointer to default
+      wrapper.style.cursor = 'default';
+
+      // Create smoke puffs from the extinguished wick
+      for (let i = 0; i < 7; i++) {
         setTimeout(() => {
           const smoke = document.createElement('div');
           smoke.className = 'smoke-puff';
-          smoke.style.left = `${Math.random() * 10 - 5}px`;
+          smoke.style.left = `${Math.random() * 8 - 4}px`;
           wrapper.appendChild(smoke);
           setTimeout(() => smoke.remove(), 1600);
-        }, i * 140);
+        }, i * 120);
       }
+
+      // Hide flame completely after fade animation
+      setTimeout(() => {
+        flame.style.display = 'none';
+      }, 350);
 
       // Trigger Confetti Explosion
       fireConfettiBurst();
@@ -856,26 +865,13 @@
       // Sweet spoken voice: "Happy birthday dear <name>"
       speakSweetBirthdayVoice(appData.voiceWish || `Happy birthday, dearest ${appData.name}! ... Wishing you all the love and happiness in the world!`);
 
-      // Reveal wish message
-      document.getElementById('wishRevealMsg').classList.remove('hidden');
-      document.getElementById('reLightBtn').classList.remove('hidden');
+      // Reveal celebratory message
+      const wishMsg = document.getElementById('wishRevealMsg');
+      if (wishMsg) wishMsg.classList.remove('hidden');
 
       if (!isMusicPlaying) {
         startMusic();
       }
-    }
-
-    function relightCandle() {
-      candleBlown = false;
-      const flame = document.getElementById('candleFlame');
-      const tip = document.getElementById('flameTip');
-
-      flame.style.transform = 'scale(1)';
-      flame.style.opacity = '1';
-      if (tip) tip.style.display = 'block';
-
-      document.getElementById('wishRevealMsg').classList.add('hidden');
-      document.getElementById('reLightBtn').classList.add('hidden');
     }
 
     function fireConfettiBurst() {
@@ -991,6 +987,8 @@
           if (Array.isArray(decoded.p) && decoded.p.length > 0) {
             appData.photos = decoded.p;
           }
+          // Card was opened via a personalized shared payload
+          isRecipientMode = true;
         }
       } catch (e) {
         console.warn('Could not decode URL configuration', e);
@@ -1001,6 +999,14 @@
        UI RENDERING & MODE LOGIC
        ======================================================== */
     function renderCelebrationView() {
+      // If opened via shared recipient link, hide all creator UI elements completely
+      if (isRecipientMode) {
+        const creatorNav = document.getElementById('creatorControlsNav');
+        const creatorFooter = document.getElementById('creatorFooterCTA');
+        if (creatorNav) creatorNav.classList.add('hidden');
+        if (creatorFooter) creatorFooter.classList.add('hidden');
+      }
+
       document.getElementById('heroRecipientName').textContent = appData.name || 'Friend';
       document.getElementById('badgeMilestone').textContent = appData.milestone || 'Birthday Joy';
       document.getElementById('heroSubtitle').textContent = appData.subtitle || '';
@@ -1145,14 +1151,15 @@
       });
 
       // Blowable candle listeners
-      document.getElementById('candleFlameWrapper').addEventListener('click', (e) => {
+      const flameWrapper = document.getElementById('candleFlameWrapper');
+      flameWrapper.addEventListener('click', (e) => {
         e.stopPropagation();
         blowOutCandle();
       });
-      document.getElementById('reLightBtn').addEventListener('click', (e) => {
+      flameWrapper.addEventListener('touchstart', (e) => {
         e.stopPropagation();
-        relightCandle();
-      });
+        blowOutCandle();
+      }, { passive: true });
 
       // Envelope opening/closing
       const sealedEnvelope = document.getElementById('sealedEnvelope');
@@ -1208,7 +1215,7 @@
         tempInput.select();
         try {
           document.execCommand('copy');
-          showToast('Short shareable link copied!');
+          showToast('Recipient link copied! It is completely view-only.');
         } catch (err) {
           showToast('Please copy the URL from browser address bar.');
         }
@@ -1218,6 +1225,20 @@
       // Reset Demo data
       document.getElementById('resetDemoBtn').addEventListener('click', () => {
         appData = { ...defaultData, photos: [...defaultData.photos] };
+        candleBlown = false;
+        const flame = document.getElementById('candleFlame');
+        const tip = document.getElementById('flameTip');
+        const flameWrapper = document.getElementById('candleFlameWrapper');
+        if (flame) {
+          flame.style.display = 'block';
+          flame.style.opacity = '1';
+          flame.style.transform = 'scale(1)';
+        }
+        if (tip) tip.style.display = 'block';
+        if (flameWrapper) flameWrapper.style.cursor = 'pointer';
+        const wishMsg = document.getElementById('wishRevealMsg');
+        if (wishMsg) wishMsg.classList.add('hidden');
+
         populateEditorFields();
         renderEditorPreviews();
         renderCelebrationView();
