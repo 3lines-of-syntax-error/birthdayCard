@@ -434,7 +434,7 @@
           </label>
           
           <div class="flex gap-2 mb-3">
-            <input type="url" id="inputPhotoUrl" placeholder="Paste image URL (e.g. from Unsplash/Imgur)" class="flex-grow bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none transition">
+            <input type="url" id="inputPhotoUrl" placeholder="Paste image URL (e.g. from ImgBB / PostImages)" class="flex-grow bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none transition">
             <button type="button" id="addPhotoUrlBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-4 py-2 rounded-xl text-xs font-semibold transition">
               Add URL
             </button>
@@ -521,7 +521,7 @@
       ]
     };
 
-    let appData = { ...defaultData };
+    let appData = { ...defaultData, photos: [...defaultData.photos] };
     let candleBlown = false;
     let isRecipientMode = false;
 
@@ -535,7 +535,6 @@
     let unlockListenersBound = false;
     let masterGainNode = null;
 
-    // Musical notes frequencies (Hz) for Happy Birthday
     const NOTE_FREQS = {
       'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
       'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25,
@@ -563,7 +562,6 @@
       }
     }
 
-    // Audio ducking during sweet voice delivery
     function duckMusic(enable) {
       if (!audioCtx || !masterGainNode) return;
       const targetGain = enable ? 0.22 : 1.0;
@@ -701,7 +699,6 @@
       const voices = window.speechSynthesis.getVoices();
       if (!voices || voices.length === 0) return null;
 
-      // Priority list of gentle, natural, high-clarity female & neutral voices
       const preferredNames = [
         'samantha', 'karen', 'victoria', 'serena', 'moira', 'tessa', 
         'zira', 'ava', 'allison', 'susan', 'fiona',
@@ -715,7 +712,6 @@
         if (matched) return matched;
       }
 
-      // Fallback: any female-designated or general English voice
       const anyFemale = voices.find(v => 
         (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('girl')) && 
         v.lang.toLowerCase().startsWith('en')
@@ -731,20 +727,16 @@
 
       window.speechSynthesis.cancel();
 
-      // Expressive rhythmic phrasing with micro-pauses for warm intonation
       let text = customPhrase;
       if (!text || text.trim() === '') {
         text = `Happy birthday, dearest ${appData.name}! ... Wishing you all the love, magic, and happiness in the world!`;
       } else if (!text.includes('...')) {
-        // Enhance default sentence transition with a breath pause
         text = text.replace(/([.!?])\s+/g, '$1 ... ');
       }
 
       const utterance = new SpeechSynthesisUtterance(text);
-
-      // Sweet, soft acoustic parameters
-      utterance.pitch = 1.22;  // Slightly uplifted, warm and sweet
-      utterance.rate = 0.90;   // Calm, affectionate, relaxed cadence
+      utterance.pitch = 1.22;
+      utterance.rate = 0.90;
       utterance.volume = 1.0;
 
       const chosenVoice = getSoftSweetVoice();
@@ -753,21 +745,14 @@
         utterance.lang = chosenVoice.lang;
       }
 
-      // Duck background music while speaking for intimacy and clarity
       duckMusic(true);
 
-      utterance.onend = () => {
-        duckMusic(false);
-      };
-
-      utterance.onerror = () => {
-        duckMusic(false);
-      };
+      utterance.onend = () => { duckMusic(false); };
+      utterance.onerror = () => { duckMusic(false); };
 
       window.speechSynthesis.speak(utterance);
     }
 
-    /* Pre-load speech voices */
     if ('speechSynthesis' in window) {
       window.speechSynthesis.onvoiceschanged = () => {
         window.speechSynthesis.getVoices();
@@ -834,16 +819,13 @@
       const tip = document.getElementById('flameTip');
       const wrapper = document.getElementById('candleFlameWrapper');
 
-      // Instantly extinguish and remove the fire
       flame.style.transition = 'all 0.35s ease-out';
       flame.style.transform = 'scale(0) translateY(-10px)';
       flame.style.opacity = '0';
       if (tip) tip.style.display = 'none';
 
-      // Ensure cursor switches from pointer to default
       wrapper.style.cursor = 'default';
 
-      // Create smoke puffs from the extinguished wick
       for (let i = 0; i < 7; i++) {
         setTimeout(() => {
           const smoke = document.createElement('div');
@@ -854,18 +836,13 @@
         }, i * 120);
       }
 
-      // Hide flame completely after fade animation
       setTimeout(() => {
         flame.style.display = 'none';
       }, 350);
 
-      // Trigger Confetti Explosion
       fireConfettiBurst();
-
-      // Sweet spoken voice: "Happy birthday dear <name>"
       speakSweetBirthdayVoice(appData.voiceWish || `Happy birthday, dearest ${appData.name}! ... Wishing you all the love and happiness in the world!`);
 
-      // Reveal celebratory message
       const wishMsg = document.getElementById('wishRevealMsg');
       if (wishMsg) wishMsg.classList.remove('hidden');
 
@@ -900,9 +877,9 @@
     }
 
     /* ========================================================
-       IMAGE COMPRESSOR (KEEPS DATA LIGHTWEIGHT)
+       IMAGE COMPRESSOR (Ultra-compressed for URLs)
        ======================================================== */
-    function compressImageFile(file, maxWidth = 480, quality = 0.65) {
+    function compressImageFile(file, maxWidth = 320, quality = 0.5) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -940,7 +917,7 @@
           l: appData.letter,
           a: appData.author,
           v: appData.voiceWish,
-          p: appData.photos.map(url => url.startsWith('http') ? url : '').filter(Boolean)
+          p: appData.photos // Now preserves both uploaded Base64 and direct URLs!
         };
 
         const jsonStr = JSON.stringify(payload);
@@ -952,6 +929,7 @@
         url.hash = `c=${compressed}`;
         return url.toString();
       } catch (err) {
+        console.error(err);
         return window.location.href;
       }
     }
@@ -987,7 +965,6 @@
           if (Array.isArray(decoded.p) && decoded.p.length > 0) {
             appData.photos = decoded.p;
           }
-          // Card was opened via a personalized shared payload
           isRecipientMode = true;
         }
       } catch (e) {
@@ -999,7 +976,6 @@
        UI RENDERING & MODE LOGIC
        ======================================================== */
     function renderCelebrationView() {
-      // If opened via shared recipient link, hide all creator UI elements completely
       if (isRecipientMode) {
         const creatorNav = document.getElementById('creatorControlsNav');
         const creatorFooter = document.getElementById('creatorFooterCTA');
@@ -1130,7 +1106,6 @@
       createBalloons();
       renderCelebrationView();
 
-      // Top control listeners
       const musicBtn = document.getElementById('musicToggleBtn');
       musicBtn.addEventListener('click', toggleMusic);
       musicBtn.addEventListener('touchend', (e) => {
@@ -1140,17 +1115,20 @@
       document.getElementById('viewCelebrationBtn').addEventListener('click', () => switchView('celebration'));
       document.getElementById('viewCustomizeBtn').addEventListener('click', () => switchView('customize'));
       document.getElementById('ctaCreateYoursBtn').addEventListener('click', () => switchView('customize'));
+      
       document.getElementById('previewFromEditorBtn').addEventListener('click', () => {
         saveEditorFields();
         switchView('celebration');
       });
+
       document.getElementById('saveAndLaunchBtn').addEventListener('click', () => {
         saveEditorFields();
+        const shareUrl = encodeDataToURL();
+        window.location.hash = shareUrl.split('#')[1] || '';
         switchView('celebration');
-        showToast('Celebration page ready! 🎉');
+        showToast('Celebration page ready! URL updated 🎉');
       });
 
-      // Blowable candle listeners
       const flameWrapper = document.getElementById('candleFlameWrapper');
       flameWrapper.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1161,7 +1139,6 @@
         blowOutCandle();
       }, { passive: true });
 
-      // Envelope opening/closing
       const sealedEnvelope = document.getElementById('sealedEnvelope');
       const unfoldedLetter = document.getElementById('unfoldedLetter');
       const closeLetterBtn = document.getElementById('closeLetterBtn');
@@ -1190,15 +1167,15 @@
         }
       });
 
-      // Photo upload via local file reader with auto-compression
+      // Photo upload via local file reader
       const photoFileInput = document.getElementById('photoFileInput');
       photoFileInput.addEventListener('change', async (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
         showToast('Optimizing photo(s)...');
-        for (const file of files.slice(0, 4)) {
-          const compressedDataUrl = await compressImageFile(file, 480, 0.65);
+        for (const file of files.slice(0, 3)) {
+          const compressedDataUrl = await compressImageFile(file, 320, 0.5);
           appData.photos.push(compressedDataUrl);
         }
         renderEditorPreviews();
@@ -1206,20 +1183,22 @@
         showToast('Photo(s) added successfully!');
       });
 
-      // Compact Shareable Link Copy
+      // Shareable Link Copy
       document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
         const shareUrl = encodeDataToURL();
-        const tempInput = document.createElement('input');
-        tempInput.value = shareUrl;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        try {
+        window.location.hash = shareUrl.split('#')[1] || '';
+
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('Recipient link copied to clipboard!');
+        }).catch(() => {
+          const tempInput = document.createElement('input');
+          tempInput.value = shareUrl;
+          document.body.appendChild(tempInput);
+          tempInput.select();
           document.execCommand('copy');
-          showToast('Recipient link copied! It is completely view-only.');
-        } catch (err) {
-          showToast('Please copy the URL from browser address bar.');
-        }
-        document.body.removeChild(tempInput);
+          document.body.removeChild(tempInput);
+          showToast('Recipient link copied!');
+        });
       });
 
       // Reset Demo data
@@ -1245,7 +1224,6 @@
         showToast('Reset to demo defaults');
       });
 
-      // Register global interaction listener to unlock audio on first gesture
       unlockListenersBound = true;
       window.addEventListener('click', handleGlobalAudioUnlock);
       window.addEventListener('touchstart', handleGlobalAudioUnlock);
