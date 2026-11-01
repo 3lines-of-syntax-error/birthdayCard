@@ -1016,16 +1016,30 @@ async function uploadToCloudinary(file) {
           if (Array.isArray(decoded.p) && decoded.p.length > 0) {
             appData.photos = decoded.p;
           }
+
+          // Force recipient view-only mode
+          isRecipientMode = true;
         }
       } catch (e) {
         console.warn('Could not decode URL configuration', e);
       }
     }
-
     /* ========================================================
        UI RENDERING & MODE LOGIC
        ======================================================== */
-    function renderCelebrationView() {
+   function renderCelebrationView() {
+      // If opened via shared recipient link, forcibly hide all editor controls
+      if (isRecipientMode) {
+        const creatorNav = document.getElementById('creatorControlsNav');
+        const creatorFooter = document.getElementById('creatorFooterCTA');
+        if (creatorNav) {
+          creatorNav.style.display = 'none';
+        }
+        if (creatorFooter) {
+          creatorFooter.style.display = 'none';
+        }
+      }
+
       document.getElementById('heroRecipientName').textContent = appData.name || 'Friend';
       document.getElementById('badgeMilestone').textContent = appData.milestone || 'Birthday Joy';
       document.getElementById('heroSubtitle').textContent = appData.subtitle || '';
@@ -1056,7 +1070,6 @@ async function uploadToCloudinary(file) {
         });
       }
     }
-
     function renderEditorPreviews() {
       const container = document.getElementById('editorPhotosContainer');
       container.innerHTML = '';
