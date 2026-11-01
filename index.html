@@ -178,10 +178,10 @@
         <span id="musicText">Play Song</span>
       </button>
 
-      <!-- View / Mode Switcher buttons -->
-      <div class="flex items-center space-x-2 bg-slate-900/80 p-1 rounded-full border border-slate-700/60 backdrop-blur shadow-lg">
+      <!-- View / Mode Switcher buttons (Strictly hidden for recipients) -->
+      <div id="creatorControlsNav" class="flex items-center space-x-2 bg-slate-900/80 p-1 rounded-full border border-slate-700/60 backdrop-blur shadow-lg">
         <button id="viewCelebrationBtn" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition bg-gradient-to-r from-amber-500 to-pink-500 text-slate-950 shadow-md">
-          <i class="fa-solid fa-gift mr-1.5"></i>Celebration
+          <i class="fa-solid fa-gift mr-1.5"></i>Preview
         </button>
         <button id="viewCustomizeBtn" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition">
           <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Customize
@@ -199,14 +199,11 @@
   <!-- MAIN WRAPPER -->
   <main class="relative z-10 pt-20 pb-16 px-4 flex-grow flex flex-col items-center">
 
-    <!-- ==============================================
-         MODE 1: CELEBRATION / RECIPIENT EXPERIENCE
-         ============================================== -->
+    <!-- MODE 1: CELEBRATION / RECIPIENT EXPERIENCE -->
     <div id="celebrationView" class="w-full max-w-4xl flex flex-col items-center space-y-16 transition-all duration-500">
       
       <!-- HERO WISH SECTION -->
       <section class="text-center pt-8 md:pt-14 relative w-full flex flex-col items-center">
-        <!-- Glowing aura behind header -->
         <div class="absolute -top-10 w-72 h-72 bg-gradient-to-tr from-pink-600/20 via-amber-500/20 to-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-300 text-xs sm:text-sm tracking-wider uppercase font-semibold mb-4 animate-bounce">
@@ -217,7 +214,7 @@
 
         <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold font-serif-title tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-300 to-pink-400 leading-tight drop-shadow-sm">
           Happy Birthday, <br class="hidden sm:inline">
-          <span id="heroRecipientName" class="text-amber-400 underline decoration-pink-500/50 decoration-wavy">Sarah</span>!
+          <span id="heroRecipientName" class="text-amber-400 underline decoration-pink-500/50 decoration-wavy">Sanku</span>!
         </h1>
 
         <p id="heroSubtitle" class="mt-4 text-base sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
@@ -235,28 +232,23 @@
           <p class="text-xs sm:text-sm text-slate-400">Moments that bring smiles to life</p>
         </div>
 
-        <div id="photosGrid" class="flex flex-wrap justify-center items-center gap-6 p-4">
-          <!-- Dynamic polaroids rendered here -->
-        </div>
+        <div id="photosGrid" class="flex flex-wrap justify-center items-center gap-6 p-4"></div>
       </section>
 
       <!-- INTERACTIVE BIRTHDAY CAKE & BLOWABLE CANDLE -->
       <section class="w-full flex flex-col items-center">
         <div class="glass-card w-full max-w-xl p-8 rounded-3xl text-center relative overflow-hidden flex flex-col items-center">
-          <!-- Stylized Cake Scene -->
           <div class="relative w-72 h-64 flex flex-col items-center justify-end my-4 select-none">
             
             <!-- Candle & Flame -->
             <div class="relative flex flex-col items-center z-20 mb-[-4px]">
-              <!-- Blowable Flame -->
-              <div id="candleFlameWrapper" class="relative cursor-pointer group flex flex-col items-center">
+              <div id="candleFlameWrapper" class="relative cursor-pointer group flex flex-col items-center p-2 -m-2">
                 <div id="candleFlame" class="candle-flame transition-all duration-300"></div>
-                <div id="flameTip" class="w-1.5 h-1.5 bg-yellow-100 rounded-full blur-[1px] absolute top-1"></div>
+                <div id="flameTip" class="w-1.5 h-1.5 bg-yellow-100 rounded-full blur-[1px] absolute top-3"></div>
+                <div class="w-0.5 h-2 bg-slate-900 rounded-full mt-0.5"></div>
               </div>
               
-              <!-- Candle stick -->
               <div class="w-4 h-16 bg-gradient-to-r from-pink-400 via-rose-200 to-pink-500 rounded-t-sm relative shadow-md">
-                <!-- Spiral stripes -->
                 <div class="w-full h-2 bg-pink-600/40 transform rotate-12 mt-3"></div>
                 <div class="w-full h-2 bg-pink-600/40 transform rotate-12 mt-3"></div>
               </div>
@@ -264,7 +256,6 @@
 
             <!-- Cake Tier 1 (Top) -->
             <div class="w-44 h-14 bg-gradient-to-r from-amber-100 via-rose-100 to-amber-200 rounded-t-2xl relative shadow-lg z-10 border-b-4 border-pink-400/70 flex justify-around items-center px-4">
-              <!-- Frosting drips -->
               <div class="w-3 h-5 bg-pink-300 rounded-full -bottom-2 relative"></div>
               <div class="w-4 h-7 bg-pink-300 rounded-full -bottom-3 relative"></div>
               <div class="w-3 h-4 bg-pink-300 rounded-full -bottom-1.5 relative"></div>
@@ -274,7 +265,6 @@
 
             <!-- Cake Tier 2 (Bottom) -->
             <div class="w-64 h-20 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 rounded-t-2xl relative shadow-2xl flex items-center justify-center border-t-4 border-amber-900/60 overflow-hidden">
-              <!-- Chocolate sprinkles decor -->
               <div class="flex space-x-3 text-pink-300 text-xs opacity-75">
                 <span>✨</span><span>🍓</span><span>✨</span><span>🍓</span><span>✨</span>
               </div>
@@ -284,14 +274,11 @@
             <div class="w-72 h-5 bg-gradient-to-r from-slate-300 via-white to-slate-400 rounded-full shadow-2xl border-t border-white/50"></div>
           </div>
 
-          <!-- Blow status & celebratory message -->
+          <!-- Blow status message -->
           <div id="blowStatusCard" class="min-h-[50px] flex flex-col items-center justify-center transition-all">
             <p id="wishRevealMsg" class="hidden text-lg font-serif-title text-amber-300 animate-fade-in font-medium">
               ✨ "May your deepest dreams and highest ambitions come alive this year!" ✨
             </p>
-            <button id="reLightBtn" class="hidden mt-3 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3.5 py-1.5 rounded-full border border-slate-700 transition">
-              <i class="fa-solid fa-fire mr-1 text-amber-400"></i> Relight candle
-            </button>
           </div>
         </div>
       </section>
@@ -306,18 +293,15 @@
           <p class="text-xs sm:text-sm text-slate-400">Handcrafted just for you</p>
         </div>
 
-        <!-- Envelope & Letter Container -->
         <div class="w-full max-w-xl relative flex flex-col items-center">
-
           <!-- Sealed Envelope State -->
           <div id="sealedEnvelope" class="w-full max-w-md h-56 bg-gradient-to-br from-amber-900/70 to-rose-950/80 rounded-2xl border border-amber-500/30 p-6 flex flex-col justify-between items-center shadow-2xl cursor-pointer hover:border-amber-400/60 transition group relative overflow-hidden backdrop-blur">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 pointer-events-none"></div>
             <div class="text-center z-10 mt-2">
               <span class="text-xs tracking-widest uppercase text-amber-400/80 font-semibold">Special Delivery</span>
-              <p class="text-sm text-slate-300 mt-1">To: <span id="envelopeToName" class="font-bold text-white">Sarah</span></p>
+              <p class="text-sm text-slate-300 mt-1">To: <span id="envelopeToName" class="font-bold text-white">Sanku</span></p>
             </div>
 
-            <!-- Wax Seal Stamp -->
             <div class="z-10 w-16 h-16 rounded-full bg-gradient-to-br from-red-600 via-rose-700 to-red-900 border-2 border-red-400/40 flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300 transform">
               <i class="fa-solid fa-heart text-amber-200 text-xl group-hover:animate-ping"></i>
             </div>
@@ -328,16 +312,14 @@
             </p>
           </div>
 
-          <!-- Unfolded Handwritten Letter State (Hidden initially) -->
+          <!-- Unfolded Handwritten Letter State -->
           <div id="unfoldedLetter" class="hidden w-full bg-[#fdfbf7] text-slate-900 rounded-2xl p-7 sm:p-10 shadow-2xl border-4 border-amber-100 relative transition-all duration-700 transform scale-95">
-            <!-- Decorative letter top border & vintage feel -->
             <div class="absolute top-3 right-4 flex space-x-2 text-slate-400">
               <button id="closeLetterBtn" title="Fold letter" class="hover:text-slate-700 text-xs p-1">
                 <i class="fa-solid fa-compress"></i> Fold
               </button>
             </div>
 
-            <!-- Stamp impression -->
             <div class="w-12 h-14 border-2 border-dashed border-rose-300 rounded flex flex-col items-center justify-center text-[10px] text-rose-500 absolute top-6 right-6 select-none opacity-80">
               <i class="fa-solid fa-stamp text-xs"></i>
               <span>LOVE</span>
@@ -345,10 +327,9 @@
 
             <div class="mb-4">
               <p class="text-xs uppercase font-sans tracking-widest text-amber-800/70 font-semibold">Dearest</p>
-              <h4 id="letterGreetingName" class="text-3xl font-handwriting text-rose-900 font-bold mt-1">Sarah,</h4>
+              <h4 id="letterGreetingName" class="text-3xl font-handwriting text-rose-900 font-bold mt-1">Sanku,</h4>
             </div>
 
-            <!-- Letter Body with realistic handwriting aesthetic -->
             <div id="letterContentBody" class="font-handwriting text-xl sm:text-2xl text-slate-800 leading-relaxed whitespace-pre-wrap min-h-[140px] pl-2 border-l-2 border-rose-200/60">
               Wishing you the most unforgettable birthday filled with endless laughter, sweet surprises, and warm blessings. You bring so much light into the lives of everyone around you. Keep shining and dreaming big!
             </div>
@@ -358,27 +339,22 @@
               <p id="letterAuthorSignature" class="text-3xl font-handwriting text-rose-800 font-bold mt-1">Forever Yours ✨</p>
             </div>
           </div>
-
         </div>
       </section>
 
-      <!-- SHARE / SEND WISH FOOTER CTA -->
-      <section class="text-center pt-4 pb-8">
-        <p class="text-xs text-slate-400 mb-3">Want to send a personalized birthday wish like this to your loved one?</p>
+      <!-- Bottom Studio CTA (Hidden strictly for recipients) -->
+      <section id="creatorFooterCTA" class="text-center pt-4 pb-8">
+        <p class="text-xs text-slate-400 mb-3">Want to edit or personalize this celebration card?</p>
         <button id="ctaCreateYoursBtn" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-slate-950 font-bold px-6 py-2.5 rounded-full shadow-lg transition active:scale-95 text-sm inline-flex items-center space-x-2">
           <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <span>Customize Your Own Gift Now</span>
+          <span>Open Card Studio</span>
         </button>
       </section>
 
     </div>
 
-
-    <!-- ==============================================
-         MODE 2: CREATOR / CUSTOMIZER DASHBOARD
-         ============================================== -->
+    <!-- MODE 2: CREATOR / CUSTOMIZER DASHBOARD -->
     <div id="customizerView" class="hidden w-full max-w-3xl glass-card rounded-3xl p-6 sm:p-10 border border-slate-700/80 shadow-2xl transition-all duration-500">
-      
       <div class="border-b border-slate-700 pb-5 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span class="text-xs uppercase tracking-wider text-amber-400 font-bold">Personalized Gift Studio</span>
@@ -392,7 +368,6 @@
       </div>
 
       <form id="customizeForm" class="space-y-6" onsubmit="return false;">
-        
         <!-- Recipient & Milestone Info -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -403,7 +378,7 @@
               <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <i class="fa-regular fa-user"></i>
               </span>
-              <input type="text" id="inputName" value="Sarah" required placeholder="e.g. Sarah, Alex, Mom" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none transition">
+              <input type="text" id="inputName" value="Sanku" required placeholder="e.g. Sanku, Alex, Mom" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none transition">
             </div>
           </div>
 
@@ -415,12 +390,12 @@
               <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <i class="fa-solid fa-cake-candles"></i>
               </span>
-              <input type="text" id="inputMilestone" value="21st Birthday" placeholder="e.g. 21st Birthday, 18th, Sweet 16" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none transition">
+              <input type="text" id="inputMilestone" value="Birthday Celebration" placeholder="e.g. 21st Birthday, 18th, Sweet 16" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none transition">
             </div>
           </div>
         </div>
 
-        <!-- Custom Subtitle / Header Greeting -->
+        <!-- Custom Subtitle -->
         <div>
           <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="inputSubtitle">
             Header Wish Subtitle
@@ -431,11 +406,11 @@
         <!-- Photo Uploader & Manager -->
         <div>
           <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-            Photo Memories (Image URL or Upload)
+            Photo Memories (Image URL or Direct Upload)
           </label>
           
           <div class="flex gap-2 mb-3">
-            <input type="url" id="inputPhotoUrl" placeholder="Paste image URL (e.g. from Unsplash/Imgur)" class="flex-grow bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none transition">
+            <input type="url" id="inputPhotoUrl" placeholder="Paste direct image URL (e.g. https://...jpg)" class="flex-grow bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none transition">
             <button type="button" id="addPhotoUrlBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-4 py-2 rounded-xl text-xs font-semibold transition">
               Add URL
             </button>
@@ -444,13 +419,10 @@
           <div class="border-2 border-dashed border-slate-700 hover:border-amber-500/70 rounded-2xl p-4 text-center transition cursor-pointer bg-slate-900/40 relative" id="dropArea">
             <input type="file" id="photoFileInput" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer">
             <i class="fa-solid fa-cloud-arrow-up text-2xl text-amber-400 mb-1"></i>
-            <p class="text-xs sm:text-sm font-medium text-slate-200">Upload photo from device (auto-optimized)</p>
+            <p class="text-xs sm:text-sm font-medium text-slate-200">Upload photo from device (Cloudinary or Auto-Optimized)</p>
           </div>
 
-          <!-- Uploaded Photos Preview Grid in Editor -->
-          <div id="editorPhotosContainer" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <!-- Dynamically populated thumbnail previews -->
-          </div>
+          <div id="editorPhotosContainer" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
         </div>
 
         <!-- Personal Letter Details -->
@@ -475,7 +447,7 @@
               <label class="block text-[11px] text-slate-400 uppercase tracking-wider mb-1" for="inputVoiceWish">
                 Voice message spoken after blowing candle
               </label>
-              <input type="text" id="inputVoiceWish" value="Happy birthday dear Sarah! May all your wishes come true!" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none transition">
+              <input type="text" id="inputVoiceWish" value="Happy birthday dear Sanku! May all your wishes come true!" class="w-full bg-slate-900/90 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none transition">
             </div>
           </div>
         </div>
@@ -497,24 +469,49 @@
             <span>Launch Celebration View</span>
           </button>
         </div>
-
       </form>
     </div>
-
   </main>
 
-  <!-- Sweet Voice & Audio Script Logic -->
   <script>
+    /* ========================================================
+       CLOUDINARY CONFIGURATION (REPLACE WITH YOUR DETAILS)
+       ======================================================== */
+    const CLOUDINARY_CLOUD_NAME = "YOUR_CLOUD_NAME"; 
+    const CLOUDINARY_UPLOAD_PRESET = "YOUR_UNSIGNED_PRESET"; 
+
+    async function uploadToCloudinary(file) {
+      if (!CLOUDINARY_CLOUD_NAME || CLOUDINARY_CLOUD_NAME === "YOUR_CLOUD_NAME") {
+        throw new Error("Cloudinary not configured. Falling back to local compression.");
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Cloudinary error:", data);
+        throw new Error(data.error ? data.error.message : "Upload failed");
+      }
+      return data.secure_url;
+    }
+
     /* ========================================================
        STATE MANAGEMENT & DEFAULT DATA
        ======================================================== */
     const defaultData = {
-      name: "Sarah",
-      milestone: "21st Birthday",
+      name: "Sanku",
+      milestone: "Birthday Celebration",
       subtitle: "May your day shine as bright as your spirit, filled with joy, laughter, and magical moments!",
       letter: "Wishing you the most unforgettable birthday filled with endless laughter, sweet surprises, and warm blessings. You bring so much light into the lives of everyone around you. Keep shining, smiling, and dreaming big!",
       author: "With all my love ✨",
-      voiceWish: "Happy birthday dear Sarah! May all your wishes come true!",
+      voiceWish: "Happy birthday dear Sanku! May all your wishes come true!",
       photos: [
         "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&auto=format&fit=crop&q=80",
         "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&auto=format&fit=crop&q=80",
@@ -522,11 +519,12 @@
       ]
     };
 
-    let appData = { ...defaultData };
+    let appData = { ...defaultData, photos: [...defaultData.photos] };
     let candleBlown = false;
+    let isRecipientMode = false;
 
     /* ========================================================
-       WEB AUDIO SYNTHESIZER: HAPPY BIRTHDAY ALWAYS-PLAYING LOOP
+       WEB AUDIO SYNTHESIZER: HAPPY BIRTHDAY
        ======================================================== */
     let audioCtx = null;
     let isMusicPlaying = false;
@@ -535,7 +533,6 @@
     let unlockListenersBound = false;
     let masterGainNode = null;
 
-    // Musical notes frequencies (Hz) for Happy Birthday
     const NOTE_FREQS = {
       'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
       'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25,
@@ -563,7 +560,6 @@
       }
     }
 
-    // Audio ducking during sweet voice delivery
     function duckMusic(enable) {
       if (!audioCtx || !masterGainNode) return;
       const targetGain = enable ? 0.22 : 1.0;
@@ -701,7 +697,6 @@
       const voices = window.speechSynthesis.getVoices();
       if (!voices || voices.length === 0) return null;
 
-      // Priority list of gentle, natural, high-clarity female & neutral voices
       const preferredNames = [
         'samantha', 'karen', 'victoria', 'serena', 'moira', 'tessa', 
         'zira', 'ava', 'allison', 'susan', 'fiona',
@@ -715,7 +710,6 @@
         if (matched) return matched;
       }
 
-      // Fallback: any female-designated or general English voice
       const anyFemale = voices.find(v => 
         (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('girl')) && 
         v.lang.toLowerCase().startsWith('en')
@@ -731,20 +725,16 @@
 
       window.speechSynthesis.cancel();
 
-      // Expressive rhythmic phrasing with micro-pauses for warm intonation
       let text = customPhrase;
       if (!text || text.trim() === '') {
         text = `Happy birthday, dearest ${appData.name}! ... Wishing you all the love, magic, and happiness in the world!`;
       } else if (!text.includes('...')) {
-        // Enhance default sentence transition with a breath pause
         text = text.replace(/([.!?])\s+/g, '$1 ... ');
       }
 
       const utterance = new SpeechSynthesisUtterance(text);
-
-      // Sweet, soft acoustic parameters
-      utterance.pitch = 1.22;  // Slightly uplifted, warm and sweet
-      utterance.rate = 0.90;   // Calm, affectionate, relaxed cadence
+      utterance.pitch = 1.22;
+      utterance.rate = 0.90;
       utterance.volume = 1.0;
 
       const chosenVoice = getSoftSweetVoice();
@@ -753,21 +743,14 @@
         utterance.lang = chosenVoice.lang;
       }
 
-      // Duck background music while speaking for intimacy and clarity
       duckMusic(true);
 
-      utterance.onend = () => {
-        duckMusic(false);
-      };
-
-      utterance.onerror = () => {
-        duckMusic(false);
-      };
+      utterance.onend = () => { duckMusic(false); };
+      utterance.onerror = () => { duckMusic(false); };
 
       window.speechSynthesis.speak(utterance);
     }
 
-    /* Pre-load speech voices */
     if ('speechSynthesis' in window) {
       window.speechSynthesis.onvoiceschanged = () => {
         window.speechSynthesis.getVoices();
@@ -834,48 +817,38 @@
       const tip = document.getElementById('flameTip');
       const wrapper = document.getElementById('candleFlameWrapper');
 
-      // Extinguish Flame
-      flame.style.transform = 'scale(0)';
+      // Extinguish fire completely
+      flame.style.transition = 'all 0.35s ease-out';
+      flame.style.transform = 'scale(0) translateY(-10px)';
       flame.style.opacity = '0';
       if (tip) tip.style.display = 'none';
 
-      // Create smoke puffs
-      for (let i = 0; i < 6; i++) {
+      wrapper.style.cursor = 'default';
+
+      // Smoke particles
+      for (let i = 0; i < 7; i++) {
         setTimeout(() => {
           const smoke = document.createElement('div');
           smoke.className = 'smoke-puff';
-          smoke.style.left = `${Math.random() * 10 - 5}px`;
+          smoke.style.left = `${Math.random() * 8 - 4}px`;
           wrapper.appendChild(smoke);
           setTimeout(() => smoke.remove(), 1600);
-        }, i * 140);
+        }, i * 120);
       }
 
-      // Trigger Confetti Explosion
-      fireConfettiBurst();
+      setTimeout(() => {
+        flame.style.display = 'none';
+      }, 350);
 
-      // Sweet spoken voice: "Happy birthday dear <name>"
+      fireConfettiBurst();
       speakSweetBirthdayVoice(appData.voiceWish || `Happy birthday, dearest ${appData.name}! ... Wishing you all the love and happiness in the world!`);
 
-      // Reveal wish message
-      document.getElementById('wishRevealMsg').classList.remove('hidden');
-      document.getElementById('reLightBtn').classList.remove('hidden');
+      const wishMsg = document.getElementById('wishRevealMsg');
+      if (wishMsg) wishMsg.classList.remove('hidden');
 
       if (!isMusicPlaying) {
         startMusic();
       }
-    }
-
-    function relightCandle() {
-      candleBlown = false;
-      const flame = document.getElementById('candleFlame');
-      const tip = document.getElementById('flameTip');
-
-      flame.style.transform = 'scale(1)';
-      flame.style.opacity = '1';
-      if (tip) tip.style.display = 'block';
-
-      document.getElementById('wishRevealMsg').classList.add('hidden');
-      document.getElementById('reLightBtn').classList.add('hidden');
     }
 
     function fireConfettiBurst() {
@@ -903,35 +876,7 @@
       }, 250);
     }
 
-/* ========================================================
-   CLOUDINARY DIRECT UPLOADER
-   ======================================================== */
-async function uploadToCloudinary(file) {
-  // Replace these two values with your details from Cloudinary
-  const CLOUD_NAME = "t3s0wlfa"; 
-  const UPLOAD_PRESET = "ml_default"; 
-
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", UPLOAD_PRESET);
-
-  const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-    method: "POST",
-    body: formData
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to upload image to Cloudinary");
-  }
-
-  const data = await response.json();
-  return data.secure_url; // Direct HTTPS URL
-}
-
-    /* ========================================================
-       IMAGE COMPRESSOR (KEEPS DATA LIGHTWEIGHT)
-       ======================================================== */
-    function compressImageFile(file, maxWidth = 480, quality = 0.65) {
+    function compressImageFile(file, maxWidth = 300, quality = 0.5) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -969,7 +914,7 @@ async function uploadToCloudinary(file) {
           l: appData.letter,
           a: appData.author,
           v: appData.voiceWish,
-          p: appData.photos.map(url => url.startsWith('http') ? url : '').filter(Boolean)
+          p: appData.photos
         };
 
         const jsonStr = JSON.stringify(payload);
@@ -981,6 +926,7 @@ async function uploadToCloudinary(file) {
         url.hash = `c=${compressed}`;
         return url.toString();
       } catch (err) {
+        console.error(err);
         return window.location.href;
       }
     }
@@ -1017,26 +963,27 @@ async function uploadToCloudinary(file) {
             appData.photos = decoded.p;
           }
 
-          // Force recipient view-only mode
+          // Shared link detected: force recipient view mode
           isRecipientMode = true;
         }
       } catch (e) {
         console.warn('Could not decode URL configuration', e);
       }
     }
+
     /* ========================================================
-       UI RENDERING & MODE LOGIC
+       UI RENDERING & RECIPIENT LOCK
        ======================================================== */
-   function renderCelebrationView() {
-      // If opened via shared recipient link, forcibly hide all editor controls
+    function renderCelebrationView() {
+      // STRICT LOCK: Completely remove edit UI for recipients
       if (isRecipientMode) {
         const creatorNav = document.getElementById('creatorControlsNav');
         const creatorFooter = document.getElementById('creatorFooterCTA');
         if (creatorNav) {
-          creatorNav.style.display = 'none';
+          creatorNav.style.setProperty('display', 'none', 'important');
         }
         if (creatorFooter) {
-          creatorFooter.style.display = 'none';
+          creatorFooter.style.setProperty('display', 'none', 'important');
         }
       }
 
@@ -1070,6 +1017,7 @@ async function uploadToCloudinary(file) {
         });
       }
     }
+
     function renderEditorPreviews() {
       const container = document.getElementById('editorPhotosContainer');
       container.innerHTML = '';
@@ -1133,7 +1081,7 @@ async function uploadToCloudinary(file) {
     }
 
     function saveEditorFields() {
-      appData.name = document.getElementById('inputName').value.trim() || 'Sarah';
+      appData.name = document.getElementById('inputName').value.trim() || 'Sanku';
       appData.milestone = document.getElementById('inputMilestone').value.trim() || 'Birthday Celebration';
       appData.subtitle = document.getElementById('inputSubtitle').value.trim();
       appData.letter = document.getElementById('inputLetter').value.trim();
@@ -1162,7 +1110,6 @@ async function uploadToCloudinary(file) {
       createBalloons();
       renderCelebrationView();
 
-      // Top control listeners
       const musicBtn = document.getElementById('musicToggleBtn');
       musicBtn.addEventListener('click', toggleMusic);
       musicBtn.addEventListener('touchend', (e) => {
@@ -1172,25 +1119,30 @@ async function uploadToCloudinary(file) {
       document.getElementById('viewCelebrationBtn').addEventListener('click', () => switchView('celebration'));
       document.getElementById('viewCustomizeBtn').addEventListener('click', () => switchView('customize'));
       document.getElementById('ctaCreateYoursBtn').addEventListener('click', () => switchView('customize'));
+
       document.getElementById('previewFromEditorBtn').addEventListener('click', () => {
         saveEditorFields();
         switchView('celebration');
       });
+
       document.getElementById('saveAndLaunchBtn').addEventListener('click', () => {
         saveEditorFields();
+        const shareUrl = encodeDataToURL();
+        window.location.hash = shareUrl.split('#')[1] || '';
         switchView('celebration');
-        showToast('Celebration page ready! 🎉');
+        showToast('Celebration page ready! URL updated 🎉');
       });
 
-      // Blowable candle listeners
-      document.getElementById('candleFlameWrapper').addEventListener('click', (e) => {
+      // Candle Flame extinguishes permanently on click/touch
+      const flameWrapper = document.getElementById('candleFlameWrapper');
+      flameWrapper.addEventListener('click', (e) => {
         e.stopPropagation();
         blowOutCandle();
       });
-      document.getElementById('reLightBtn').addEventListener('click', (e) => {
+      flameWrapper.addEventListener('touchstart', (e) => {
         e.stopPropagation();
-        relightCandle();
-      });
+        blowOutCandle();
+      }, { passive: true });
 
       // Envelope opening/closing
       const sealedEnvelope = document.getElementById('sealedEnvelope');
@@ -1221,53 +1173,69 @@ async function uploadToCloudinary(file) {
         }
       });
 
-     // Photo upload via Cloudinary direct cloud upload
+      // Photo upload via Cloudinary or local fallback
       const photoFileInput = document.getElementById('photoFileInput');
       photoFileInput.addEventListener('change', async (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
-        showToast('Uploading photo(s) to cloud...');
-
-        try {
-          for (const file of files.slice(0, 3)) {
+        showToast('Uploading photo(s)...');
+        for (const file of files.slice(0, 3)) {
+          try {
             const cloudUrl = await uploadToCloudinary(file);
             appData.photos.push(cloudUrl);
+          } catch (err) {
+            // Fallback if Cloudinary credentials are not set
+            const compressed = await compressImageFile(file, 280, 0.45);
+            appData.photos.push(compressed);
           }
-          renderEditorPreviews();
-          renderCelebrationView();
-          showToast('Photo(s) uploaded to cloud! 🎉');
-        } catch (err) {
-          console.error(err);
-          showToast('Cloud upload failed. Check Cloud Name & Preset.');
         }
+        renderEditorPreviews();
+        renderCelebrationView();
+        showToast('Photo(s) added successfully! 🎉');
       });
-      // Compact Shareable Link Copy
+
+      // Shareable Link Copy
       document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
         const shareUrl = encodeDataToURL();
-        const tempInput = document.createElement('input');
-        tempInput.value = shareUrl;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        try {
+        window.location.hash = shareUrl.split('#')[1] || '';
+
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('Recipient link copied to clipboard!');
+        }).catch(() => {
+          const tempInput = document.createElement('input');
+          tempInput.value = shareUrl;
+          document.body.appendChild(tempInput);
+          tempInput.select();
           document.execCommand('copy');
-          showToast('Short shareable link copied!');
-        } catch (err) {
-          showToast('Please copy the URL from browser address bar.');
-        }
-        document.body.removeChild(tempInput);
+          document.body.removeChild(tempInput);
+          showToast('Recipient link copied!');
+        });
       });
 
       // Reset Demo data
       document.getElementById('resetDemoBtn').addEventListener('click', () => {
         appData = { ...defaultData, photos: [...defaultData.photos] };
+        candleBlown = false;
+        const flame = document.getElementById('candleFlame');
+        const tip = document.getElementById('flameTip');
+        const flameWrapper = document.getElementById('candleFlameWrapper');
+        if (flame) {
+          flame.style.display = 'block';
+          flame.style.opacity = '1';
+          flame.style.transform = 'scale(1)';
+        }
+        if (tip) tip.style.display = 'block';
+        if (flameWrapper) flameWrapper.style.cursor = 'pointer';
+        const wishMsg = document.getElementById('wishRevealMsg');
+        if (wishMsg) wishMsg.classList.add('hidden');
+
         populateEditorFields();
         renderEditorPreviews();
         renderCelebrationView();
-        showToast('Reset to demo defaults');
+        showToast('Reset to defaults');
       });
 
-      // Register global interaction listener to unlock audio on first gesture
       unlockListenersBound = true;
       window.addEventListener('click', handleGlobalAudioUnlock);
       window.addEventListener('touchstart', handleGlobalAudioUnlock);
